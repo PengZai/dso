@@ -19,7 +19,7 @@ find_package(Boost COMPONENTS system thread)
 
 # optional libraries
 find_package(LibZip QUIET)
-find_package(Pangolin 0.2 QUIET)
+find_package(Pangolin)
 find_package(OpenCV QUIET)
 
 # flags
@@ -32,6 +32,9 @@ set(CMAKE_CXX_FLAGS
 if (MSVC)
      set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /EHsc")
 endif (MSVC)
+
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 # Sources files
 set(dso_SOURCE_FILES
