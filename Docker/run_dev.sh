@@ -2,7 +2,8 @@
 
 PROJECT_NAME="dso"
 IMAGE_NAME="${PROJECT_NAME}:ubuntu-20.04"
-DATA_PATH="/media/${USER}/zp_video/datasets"
+DATA_PATH="/media/${USER}/zhipeng_usb/datasets"
+DATA_PATH2="/media/${USER}/zhipeng_8t1/datasets"
 # Pick up config image key if specified
 if [[ ! -z "${CONFIG_DATA_PATH}" ]]; then
     DATA_PATH=$CONFIG_DATA_PATH
@@ -10,7 +11,7 @@ fi
 
 
 
-docker build -t $IMAGE_NAME -f "${HOME}/vscode_projects/${PROJECT_NAME}/Docker/Dockerfile" .
+docker build -t $IMAGE_NAME -f "${HOME}/vscode_projects/${PROJECT_NAME}/Docker/dockerfile" .
 
 
 xhost +local:root
@@ -23,6 +24,7 @@ docker run \
     -v /tmp/.X11-unix:/tmp/.X11-unix:rw \
     -v ${HOME}/vscode_projects/${PROJECT_NAME}:/root/${PROJECT_NAME} \
     -v ${DATA_PATH}:/root/datasets \
+    -v ${DATA_PATH2}:/root/datasets2 \
     --privileged \
     --cap-add sys_ptrace \
     --runtime=nvidia \

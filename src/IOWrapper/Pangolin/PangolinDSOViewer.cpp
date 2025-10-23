@@ -194,9 +194,22 @@ void PangolinDSOViewer::run()
 
 
 		openImagesMutex.lock();
-		if(videoImgChanged) 	texVideo.Upload(internalVideoImg->data,GL_BGR,GL_UNSIGNED_BYTE);
-		if(kfImgChanged) 		texKFDepth.Upload(internalKFImg->data,GL_BGR,GL_UNSIGNED_BYTE);
-		if(resImgChanged) 		texResidual.Upload(internalResImg->data,GL_BGR,GL_UNSIGNED_BYTE);
+		if(videoImgChanged){
+			texVideo.Upload(internalVideoImg->data,GL_BGR,GL_UNSIGNED_BYTE);
+			// cv::Mat img(h, w, CV_8UC3, reinterpret_cast<unsigned char*>(internalVideoImg->data));
+			// cv::imshow("RGB Image", img);
+			// cv::waitKey(0);
+
+		}
+
+		if(kfImgChanged)
+		{
+			texKFDepth.Upload(internalKFImg->data,GL_BGR,GL_UNSIGNED_BYTE);
+		}
+
+		if(resImgChanged){
+			texResidual.Upload(internalResImg->data,GL_BGR,GL_UNSIGNED_BYTE);
+		}
 		videoImgChanged=kfImgChanged=resImgChanged=false;
 		openImagesMutex.unlock();
 

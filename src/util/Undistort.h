@@ -23,7 +23,7 @@
 
 
 #pragma once
-
+#include <opencv2/opencv.hpp>
 #include "util/ImageAndExposure.h"
 #include "util/MinimalImage.h"
 #include "util/NumType.h"

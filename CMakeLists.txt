@@ -5,7 +5,7 @@ CMAKE_MINIMUM_REQUIRED(VERSION 2.6)
 #set(CMAKE_VERBOSE_MAKEFILE ON)
 
 
-set(BUILD_TYPE Release)
+# set(BUILD_TYPE Release)
 #set(BUILD_TYPE RelWithDebInfo)
 
 set(EXECUTABLE_OUTPUT_PATH bin)
@@ -24,14 +24,29 @@ find_package(OpenCV QUIET)
 
 # flags
 add_definitions("-DENABLE_SSE")
-set(CMAKE_CXX_FLAGS
-   "${SSE_FLAGS} -O3 -g -std=c++0x -march=native"
-#   "${SSE_FLAGS} -O3 -g -std=c++0x -fno-omit-frame-pointer"
-)
+# set(CMAKE_CXX_FLAGS
+#    "${SSE_FLAGS} -O3 -g -std=c++0x -march=native"
+# #   "${SSE_FLAGS} -O3 -g -std=c++0x -fno-omit-frame-pointer"
+# )
 
-if (MSVC)
-     set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /EHsc")
-endif (MSVC)
+option(ENABLE_CMAKE_DEBUG "Enable detailed debug messages" ON)
+
+if(ENABLE_CMAKE_DEBUG)
+    # Debug or Release
+    set(CMAKE_BUILD_TYPE "Debug")
+else()
+    set(CMAKE_BUILD_TYPE "Release")
+endif()
+
+# Enable compile optimizations
+set(CMAKE_CXX_FLAGS_RELEASE "${SSE_FLAGS} -O3 -g -std=c++0x -march=native")
+
+# Enable debug flags (use if you want to debug in gdb)
+set(CMAKE_CXX_FLAGS_DEBUG "${SSE_FLAGS} -g3 -g -std=c++0x -march=native")
+
+# if (MSVC)
+#      set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /EHsc")
+# endif (MSVC)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)

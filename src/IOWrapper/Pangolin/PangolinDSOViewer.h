@@ -23,6 +23,7 @@
 
 
 #pragma once
+#include <opencv2/opencv.hpp>
 #include <pangolin/pangolin.h>
 #include "boost/thread.hpp"
 #include "util/MinimalImage.h"

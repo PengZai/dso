@@ -1,0 +1,44 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "PolyTunnel_haygrove",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/build/bin/dso_dataset",
+            "args": [
+                "files=/root/datasets2/PolyTunnel_haygrove_June2025/EASY/right_basler",
+                "calib=/root/datasets2/PolyTunnel_haygrove_June2025/EASY/right_basler.txt",
+                "preset=0",
+                "mode=1"
+            ],
+            "stopAtEntry": false,
+            "cwd": "${fileDirname}",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "gdb",
+        },
+        {
+            "name": "BotanicGardenLaunch",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/build/bin/dso_dataset",
+            "args": [
+                "files=/root/datasets2/BotanicGarden/1018-00/1018_00_img10hz600p/left_rgb",
+                "calib=/root/datasets2/BotanicGarden/1018-00/1018_00_img10hz600p/left_rgb_camera.txt",
+                "preset=0",
+                "mode=1"
+            ],
+            "stopAtEntry": false,
+            "cwd": "${fileDirname}",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "gdb"
+        }
+        
+
+    ]
+}
