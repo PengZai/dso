@@ -477,11 +477,11 @@ ImageAndExposure* Undistort::undistort(const MinimalImage<T>* image_raw, float e
 		memcpy(result->image, photometricUndist->output->image, sizeof(float)*w*h);
 	}
 
-	cv::Mat orginal_img(hOrg, wOrg, CV_32FC1, photometricUndist->output->image);
-	cv::imwrite(std::to_string(timestamp)+"_original.png", orginal_img);
+	// cv::Mat orginal_img(hOrg, wOrg, CV_32FC1, photometricUndist->output->image);
+	// cv::imwrite(std::to_string(timestamp)+"_original.png", orginal_img);
 	
-	cv::Mat img(h, w, CV_32FC1, result->image);
-	cv::imwrite(std::to_string(timestamp)+".png", img);
+	// cv::Mat img(h, w, CV_32FC1, result->image);
+	// cv::imwrite(std::to_string(timestamp)+".png", img);
 
 	applyBlurNoise(result->image);
 

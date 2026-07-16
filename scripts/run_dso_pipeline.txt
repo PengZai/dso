@@ -1,0 +1,13 @@
+I want write a script to help me get finnal dso_result.txt
+
+remember to put calibration configs and times.txt on last diretory of image directory(forwardLeft), otherwise, we don't have time on result.txt
+
+I need run this command in container to get results.txt in /root/dso/build/result.txt
+$: /root/dso/build/bin/dso_dataset files=/root/datasets/AereHFeb2026/easy2_AprilAdd/forwardLeft calib=/root/dso/configs/polytunnel_leftForward.txt preset=0 mode=1
+
+then
+$: python3 transfer2imu.py
+this will generate a result_clean.txt in /root/dso/scripts/result_clean.txt
+
+then move the file to local machine position and rename
+/media/spiderman/zhipeng_usb1/datasets/AereHFeb2026/easy2_AprilAdd/dso_traj/dso.txt

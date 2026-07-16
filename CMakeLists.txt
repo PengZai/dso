@@ -29,7 +29,7 @@ add_definitions("-DENABLE_SSE")
 # #   "${SSE_FLAGS} -O3 -g -std=c++0x -fno-omit-frame-pointer"
 # )
 
-option(ENABLE_CMAKE_DEBUG "Enable detailed debug messages" ON)
+option(ENABLE_CMAKE_DEBUG "Enable detailed debug messages" OFF)
 
 if(ENABLE_CMAKE_DEBUG)
     # Debug or Release
