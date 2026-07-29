@@ -104,6 +104,8 @@ However, it should be easy to adapt it to your needs, if required. The binary is
 
 - `files=XXX` where XXX is either a folder or .zip archive containing images. They are sorted *alphabetically*. for .zip to work, need to comiple with ziplib support.
 
+- `times=XXX` optionally specifies the timestamp file. Each non-empty data line must contain `ID TIMESTAMP [EXPOSURE]`, and lines must correspond to the alphabetically sorted images. The ID is ignored and the timestamp is in seconds. If omitted, DSO looks for `times.txt` next to the image folder or archive.
+
 - `gamma=XXX` where XXX is a gamma calibration file, containing a single row with 256 values, mapping [0..255] to the respective irradiance value, i.e. containing the *discretized inverse response function*. See TUM monoVO dataset for an example.
 
 - `vignette=XXX` where XXX is a monochrome 16bit or 8bit image containing the vignette as pixelwise attenuation factors. See TUM monoVO dataset for an example.

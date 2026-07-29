@@ -55,6 +55,7 @@ std::string vignette = "";
 std::string gammaCalib = "";
 std::string source = "";
 std::string calib = "";
+std::string timesFile = "";
 double rescale = 1;
 bool reverse = false;
 bool disableROS = false;
@@ -278,6 +279,13 @@ void parseArgument(char* arg)
 		return;
 	}
 
+	if(1==sscanf(arg,"times=%999s",buf))
+	{
+		timesFile = buf;
+		printf("loading timestamps from %s!\n", timesFile.c_str());
+		return;
+	}
+
 	if(1==sscanf(arg,"vignette=%s",buf))
 	{
 		vignette = buf;
@@ -361,7 +369,7 @@ int main( int argc, char** argv )
 	boost::thread exThread = boost::thread(exitThread);
 
 
-	ImageFolderReader* reader = new ImageFolderReader(source,calib, gammaCalib, vignette);
+	ImageFolderReader* reader = new ImageFolderReader(source,calib, gammaCalib, vignette, timesFile);
 	reader->setGlobalCalibration();
 
 

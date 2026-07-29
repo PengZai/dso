@@ -102,7 +102,8 @@ struct PrepImageItem
 class ImageFolderReader
 {
 public:
-	ImageFolderReader(std::string path, std::string calibFile, std::string gammaFile, std::string vignetteFile)
+	ImageFolderReader(std::string path, std::string calibFile, std::string gammaFile,
+			std::string vignetteFile, std::string timesFile = "")
 	{
 		this->path = path;
 		this->calibfile = calibFile;
@@ -160,7 +161,7 @@ public:
 
 
 		// load timestamps if possible.
-		loadTimestamps();
+		loadTimestamps(timesFile);
 		printf("ImageFolderReader: got %d files in %s!\n", (int)files.size(), path.c_str());
 
 	}
@@ -291,29 +292,32 @@ private:
 		return ret2;
 	}
 
-	inline void loadTimestamps()
+	inline void loadTimestamps(const std::string &timesFileOverride)
 	{
 		std::ifstream tr;
-		std::string timesFile = path.substr(0,path.find_last_of('/')) + "/times.txt";
+		std::string timesFile = timesFileOverride;
+		if(timesFile.empty())
+			timesFile = path.substr(0,path.find_last_of('/')) + "/times.txt";
 		std::cout << "timesFile " << timesFile << std::endl;
 		tr.open(timesFile.c_str());
-		while(!tr.eof() && tr.good())
-		{
-			std::string line;
-			char buf[1000];
-			tr.getline(buf, 1000);
+		if(!tr.good())
+			printf("WARNING: could not open timestamp file %s. Image timestamps will be set to zero.\n",
+					timesFile.c_str());
 
-			int id;
+		char buf[1000];
+		while(tr.getline(buf, sizeof(buf)))
+		{
+			char id[1000];
 			double stamp;
 			float exposure = 0;
 
-			if(3 == sscanf(buf, "%d %lf %f", &id, &stamp, &exposure))
+			if(3 == sscanf(buf, "%999s %lf %f", id, &stamp, &exposure))
 			{
 				timestamps.push_back(stamp);
 				exposures.push_back(exposure);
 			}
 
-			else if(2 == sscanf(buf, "%d %lf", &id, &stamp))
+			else if(2 == sscanf(buf, "%999s %lf", id, &stamp))
 			{
 				timestamps.push_back(stamp);
 				exposures.push_back(exposure);
@@ -342,7 +346,9 @@ private:
 
 		if((int)getNumImages() != (int)timestamps.size())
 		{
-			printf("set timestamps and exposures to zero!\n");
+			printf("Timestamp count mismatch in %s: got %d timestamps for %d images. "
+					"Setting timestamps and exposures to zero!\n",
+					timesFile.c_str(), (int)timestamps.size(), (int)getNumImages());
 			exposures.clear();
 			timestamps.clear();
 		}
@@ -377,4 +383,3 @@ private:
 	char* databuffer;
 #endif
 };
-
