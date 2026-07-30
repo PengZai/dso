@@ -5,15 +5,18 @@ IMAGE_NAME="${PROJECT_NAME}:ubuntu-20.04"
 DATA_PATH="/media/${USER}/zhipeng_usb1/datasets"
 DATA_PATH2="/media/${USER}/zhipeng_8t1/datasets"
 DATA_PATH3="/mnt/lboro_nas/personal/Zhipeng"
+GPU_ARGS=()
 
 # Pick up config image key if specified
-if [[ ! -z "${CONFIG_DATA_PATH}" ]]; then
+if [[ -n "${CONFIG_DATA_PATH}" ]]; then
     DATA_PATH=$CONFIG_DATA_PATH
 fi
 
+if [[ "${USE_NVIDIA:-0}" == "1" ]]; then
+    GPU_ARGS=(--runtime=nvidia --gpus all)
+fi
 
-
-docker build -t $IMAGE_NAME -f "${HOME}/vscode_projects/${PROJECT_NAME}/Docker/dockerfile" .
+docker build -t "$IMAGE_NAME" -f "${HOME}/vscode_projects/${PROJECT_NAME}/Docker/dockerfile" .
 
 
 xhost +local:root
@@ -21,18 +24,17 @@ xhost +local:root
 docker run \
     --rm \
     -e DISPLAY \
-    -v ~/.Xauthority:/root/.Xauthority:rw \
+    -v "${HOME}/.Xauthority:/root/.Xauthority:rw" \
     --network host \
     -v /tmp/.X11-unix:/tmp/.X11-unix:rw \
-    -v ${HOME}/vscode_projects/${PROJECT_NAME}:/root/${PROJECT_NAME} \
-    -v ${DATA_PATH}:/root/datasets \
-    -v ${DATA_PATH2}:/root/datasets2 \
-    -v ${DATA_PATH3}:/root/lboro_nas \
+    -v "${HOME}/vscode_projects/${PROJECT_NAME}:/root/${PROJECT_NAME}" \
+    -v "${DATA_PATH}:/root/datasets" \
+    -v "${DATA_PATH2}:/root/datasets2" \
+    -v "${DATA_PATH3}:/root/lboro_nas" \
     --privileged \
     --cap-add sys_ptrace \
-    --runtime=nvidia \
-    --gpus all \
-    -it --name $PROJECT_NAME $IMAGE_NAME /bin/bash
+    "${GPU_ARGS[@]}" \
+    -it --name "$PROJECT_NAME" "$IMAGE_NAME" /bin/bash
 
 # docker run --rm -it --name $PROJECT_NAME $IMAGE_NAME /bin/bash
 

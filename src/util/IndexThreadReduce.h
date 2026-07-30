@@ -25,6 +25,7 @@
 
 #pragma once
 #include "util/settings.h"
+#include <boost/bind/bind.hpp>
 #include "boost/thread.hpp"
 #include <stdio.h>
 #include <iostream>
@@ -33,6 +34,11 @@
 
 namespace dso
 {
+
+using boost::placeholders::_1;
+using boost::placeholders::_2;
+using boost::placeholders::_3;
+using boost::placeholders::_4;
 
 template<typename Running>
 class IndexThreadReduce

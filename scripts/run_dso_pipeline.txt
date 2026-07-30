@@ -5,6 +5,17 @@ remember to put calibration configs and times.txt on last diretory of image dire
 I need run this command in container to get results.txt in /root/dso/build/result.txt
 $: /root/dso/build/bin/dso_dataset files=/root/datasets/AereHFeb2026/easy2_AprilAdd/forwardLeft calib=/root/dso/configs/polytunnel_leftForward.txt preset=0 mode=1
 
+
+/root/dso/build/bin/dso_dataset files=/root/datasets2/BotanicGarden/1005-00/1005_00_img10hz600p/left_rgb/ calib=/root/dso/configs/BotanicGarden.txt preset=0 mode=1
+
+
+./build/bin/dso_dataset \
+  files=/media/thor-usr/zhipeng_8t1/datasets/BotanicGarden/1005-00/1005_00_img10hz600p/left_rgb \
+  times=/media/thor-usr/zhipeng_8t1/datasets/BotanicGarden/1005-00/1005_00_img10hz600p/_dalsa_rgb_left_image_raw_image_name_timestamps.txt \
+  calib=configs/BotanicGarden.txt \
+  preset=0 \
+  mode=1
+
 then
 $: python3 transfer2imu.py
 this will generate a result_clean.txt in /root/dso/scripts/result_clean.txt
